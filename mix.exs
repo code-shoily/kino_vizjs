@@ -12,7 +12,8 @@ defmodule KinoVizjs.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       name: "KinoVizjs",
-      description: "A Kino smart cell and component for rendering GraphViz (DOT) graphs with Viz.js",
+      description:
+        "A Kino smart cell and component for rendering GraphViz (DOT) graphs with Viz.js",
       source_url: @source_url,
       homepage_url: @source_url,
       package: package(),
