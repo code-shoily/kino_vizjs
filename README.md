@@ -1,5 +1,10 @@
 # KinoVizjs
 
+[![Hex.pm](https://img.shields.io/hexpm/v/kino_vizjs.svg)](https://hex.pm/packages/kino_vizjs)
+[![Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/kino_vizjs)
+[![CI](https://github.com/code-shoily/kino_vizjs/actions/workflows/ci.yml/badge.svg)](https://github.com/code-shoily/kino_vizjs/actions/workflows/ci.yml)
+[![License](https://img.shields.io/hexpm/l/kino_vizjs.svg)](LICENSE)
+
 A [Livebook](https://livebook.dev) smart cell and component for rendering GraphViz (DOT) graphs in the browser using [Viz.js](https://github.com/mdaines/viz-js).
 
 `KinoVizjs` downloads the Viz.js WebAssembly bundle into the browser client and renders your graphs locally. 
@@ -8,11 +13,21 @@ Unlike [kino_yog](https://github.com/code-shoily/kino_yog) - the project I creat
 
 ## Installation
 
-To bring `KinoVizjs` into your Livebook, simply add the package to your setup cell:
+Add `kino_vizjs` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:kino_vizjs, "~> 0.5"}
+  ]
+end
+```
+
+Or install it directly in a Livebook setup cell:
 
 ```elixir
 Mix.install([
-  {:kino_vizjs, github: "code-shoily/kino_vizjs"}
+  {:kino_vizjs, "~> 0.5"}
 ])
 ```
 
