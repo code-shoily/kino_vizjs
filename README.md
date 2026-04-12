@@ -84,6 +84,8 @@ Yog.Generator.Classic.petersen()
 |> Kino.VizJS.render()
 ```
 
+More Yog examples involving flow, pathfinding, spanning trees, and livebooks examples will be added soon.
+
 ### Libgraph Example
 
 ```elixir
@@ -100,10 +102,6 @@ graph =
 
 Kino.VizJS.render(dot)
 ```
-
-#### Options
-
-* `:engine` - The GraphViz engine to use. Supported options are `"dot"`, `"circo"`, `"neato"`, `"fdp"`, `"sfdp"`, `"twopi"`, `"osage"`, and `"patchwork"`. Defaults to `"dot"`.
 
 ## Theme Support
 
