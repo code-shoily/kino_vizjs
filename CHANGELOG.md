@@ -7,19 +7,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
-- **Interactive Rendering**: Integrated `svg-pan-zoom` to provide a professional pan-and-zoom experience for all rendered graphs.
-- **Dimension Customization**: Added `:height` and `:width` options to `Kino.VizJS.render/2` with support for both numeric and string values (e.g., `500`, `"100%"`).
-- **Midnight Editor Theme**: Completely redesigned the Smart Cell UI with a high-contrast, professional "Midnight" dark theme and a dedicated layout settings dashboard.
-- **Reactive Smart Cell**: The rendered graph now dynamically updates as you change dimensions in the Smart Cell form without requiring a full evaluation.
-- **Download/Copy Toolbar**: Added a premium glassmorphism toolbar to rendered graphs with options to Download DOT, Download SVG, and Copy DOT to clipboard.
+- Integrated `svg-pan-zoom` for pan-and-zoom support on rendered graphs.
+- Added `:height` and `:width` options to `Kino.VizJS.render/2`. Accepts integers (pixels) or strings (e.g., `"100%"`).
+- Redesigned the Smart Cell editor with a dark theme and layout settings for height/width.
+- Smart Cell dimensions now update the rendered graph reactively without requiring re-evaluation.
+- Added a toolbar overlay on rendered graphs with Download DOT, Download SVG, and Copy DOT buttons.
+- Added `@spec` to `Kino.VizJS.render/2`.
+- `render/2` now validates the engine name at the Elixir level, raising `ArgumentError` for unrecognized engines.
+- `render/2` now enforces `is_binary(dot_string)` via a guard clause.
+- Smart Cell `to_source/1` omits options that match their defaults.
+- CI now runs `mix compile --warnings-as-errors` and `mix dialyzer`. Added `_build` caching.
 
 ### Fixed
-- **Unsupported Engines**: Fixed a bug where choosing `sfdp` or `patchwork` engines would cause render errors. These unsupported layout engines have been removed.
+- Removed `sfdp` and `patchwork` engines, which are not supported by Viz.js 2.x.
+- Error messages from Viz.js are now rendered via `textContent` instead of `innerHTML` to prevent XSS.
 
 ## [0.5.0] - 2026-04-12
 
 ### Added
 - Initial Hex release.
 - `Kino.VizJS` component for rendering GraphViz DOT strings via Viz.js.
-- `Kino.VizJS.SmartCell` interactive smart cell for Livebook.
+- `Kino.VizJS.SmartCell` for Livebook.
 - Theme-aware rendering (adapts to Livebook light/dark mode).

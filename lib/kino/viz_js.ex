@@ -5,17 +5,30 @@ defmodule Kino.VizJS do
 
   use Kino.JS
 
+  @valid_engines ~w(dot circo neato fdp twopi osage)
+
+  @typep engine :: String.t()
+  @typep dimension :: String.t() | non_neg_integer()
+  @typep option :: {:engine, engine()} | {:height, dimension()} | {:width, dimension()}
+
   @doc """
   Creates a new Kino component to render the given DOT string using Viz.js.
 
   ## Options
 
-    * `:engine` - The GraphViz engine to use (e.g. "dot", "circo", "neato", "fdp", "twopi", "osage"). Defaults to `"dot"`.
+    * `:engine` - The GraphViz engine to use. Must be one of `#{inspect(@valid_engines)}`. Defaults to `"dot"`.
     * `:height` - The height of the graph container. Can be an integer (pixels) or a string (e.g. "400px", "50vh"). If an integer is provided, "px" is assumed. Defaults to `"300px"`.
     * `:width` - The width of the graph container. Can be an integer (pixels) or a string (e.g. "100%", "500px"). If an integer is provided, "px" is assumed. Defaults to `"100%"`.
   """
-  def render(dot_string, options \\ []) do
+  @spec render(String.t(), [option()]) :: Kino.JS.t()
+  def render(dot_string, options \\ []) when is_binary(dot_string) do
     options = Keyword.validate!(options, engine: "dot", height: "300px", width: "100%")
+
+    unless options[:engine] in @valid_engines do
+      raise ArgumentError,
+            "invalid engine #{inspect(options[:engine])}, expected one of #{inspect(@valid_engines)}"
+    end
+
     {layout_options, render_options} = Keyword.split(options, [:height, :width])
 
     Kino.JS.new(__MODULE__, %{
@@ -211,15 +224,21 @@ defmodule Kino.VizJS do
             }, 100);
           });
         } catch (error) {
-          dotContainer.innerHTML = `
-            <div class="p-6 bg-red-50 text-red-800 rounded-xl w-full max-w-lg shadow-sm border border-red-100">
-              <div class="flex items-center space-x-2 mb-2">
-                 <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
-                 <p class="font-bold text-sm uppercase tracking-tight">Render Error</p>
-              </div>
-              <pre class="mt-2 text-xs overflow-auto bg-white/50 p-4 rounded-lg font-mono border border-red-200/50 max-h-40">${error}</pre>
-            </div>
-          `;
+          const errorWrapper = document.createElement("div");
+          errorWrapper.className = "p-6 bg-red-50 text-red-800 rounded-xl w-full max-w-lg shadow-sm border border-red-100";
+
+          const errorHeader = document.createElement("div");
+          errorHeader.className = "flex items-center space-x-2 mb-2";
+          errorHeader.innerHTML = `<svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg><p class="font-bold text-sm uppercase tracking-tight">Render Error</p>`;
+
+          const errorPre = document.createElement("pre");
+          errorPre.className = "mt-2 text-xs overflow-auto bg-white/50 p-4 rounded-lg font-mono border border-red-200/50 max-h-40";
+          errorPre.textContent = error;
+
+          errorWrapper.appendChild(errorHeader);
+          errorWrapper.appendChild(errorPre);
+          dotContainer.innerHTML = "";
+          dotContainer.appendChild(errorWrapper);
           dotContainer.classList.remove("cursor-move");
         }
       };
@@ -233,12 +252,21 @@ defmodule Kino.VizJS do
 
         renderGraph(payload);
       } catch (e) {
-        dotContainer.innerHTML = `
-          <div class="p-6 bg-amber-50 text-amber-900 rounded-xl w-full max-w-lg shadow-sm border border-amber-100">
-            <p class="font-bold text-sm mb-2 uppercase tracking-tight underline adornment-amber-500">Failed to load Engine</p>
-            <pre class="mt-2 text-xs overflow-auto bg-white/50 p-4 rounded-lg font-mono border border-amber-200/50">${e}</pre>
-          </div>
-        `;
+        const loadErrorWrapper = document.createElement("div");
+        loadErrorWrapper.className = "p-6 bg-amber-50 text-amber-900 rounded-xl w-full max-w-lg shadow-sm border border-amber-100";
+
+        const loadErrorTitle = document.createElement("p");
+        loadErrorTitle.className = "font-bold text-sm mb-2 uppercase tracking-tight underline";
+        loadErrorTitle.textContent = "Failed to load Engine";
+
+        const loadErrorPre = document.createElement("pre");
+        loadErrorPre.className = "mt-2 text-xs overflow-auto bg-white/50 p-4 rounded-lg font-mono border border-amber-200/50";
+        loadErrorPre.textContent = e;
+
+        loadErrorWrapper.appendChild(loadErrorTitle);
+        loadErrorWrapper.appendChild(loadErrorPre);
+        dotContainer.innerHTML = "";
+        dotContainer.appendChild(loadErrorWrapper);
         dotContainer.classList.remove("cursor-move");
       }
     }

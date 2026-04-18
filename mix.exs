@@ -32,7 +32,8 @@ defmodule KinoVizjs.MixProject do
     [
       {:kino, "~> 0.14"},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false}
     ]
   end
 
@@ -49,7 +50,7 @@ defmodule KinoVizjs.MixProject do
   defp docs do
     [
       main: "readme",
-      extras: ["README.md"],
+      extras: ["README.md", "CHANGELOG.md"],
       source_url: @source_url,
       source_ref: "v#{@version}"
     ]

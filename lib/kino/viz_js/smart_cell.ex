@@ -63,15 +63,24 @@ defmodule Kino.VizJS.SmartCell do
     }
   end
 
+  @defaults %{"engine" => "dot", "height" => "300px", "width" => "100%"}
+
   @impl true
   def to_source(attrs) do
     dot_string = attrs["dot_string"] |> String.trim()
-    engine = attrs["engine"]
-    height = attrs["height"]
-    width = attrs["width"]
 
-    options = [engine: engine, height: height, width: width]
-    "Kino.VizJS.render(#{inspect(dot_string)}, #{inspect(options) |> String.slice(1..-2//1)})"
+    options =
+      [{"engine", :engine}, {"height", :height}, {"width", :width}]
+      |> Enum.reject(fn {key, _atom} -> attrs[key] == @defaults[key] end)
+      |> Enum.map(fn {key, atom} -> {atom, attrs[key]} end)
+
+    case options do
+      [] ->
+        "Kino.VizJS.render(#{inspect(dot_string)})"
+
+      opts ->
+        "Kino.VizJS.render(#{inspect(dot_string)}, #{inspect(opts) |> String.slice(1..-2//1)})"
+    end
   end
 
   asset "main.js" do
