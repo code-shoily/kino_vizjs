@@ -1,5 +1,48 @@
 defmodule Kino.VizJS.SmartCell do
-  @moduledoc false
+  @moduledoc """
+  Renders GraphViz DOT strings using Viz.js (WebAssembly).
+
+  ### Features
+
+  - **Smart Cell:** Quick creation from the Smart toolbar
+  - **Reactive Editor:** Changes to DOT or layout settings update the graph instantly
+  - **Pan & Zoom:** Built-in navigation for large or complex graphs
+  - **Theme Aware:** Automatically adapts to Livebook light/dark themes
+  - **Download:** Save graph as DOT or SVG directly from the UI
+
+  ### Usage
+
+  #### 1. Quick Create
+  Click **Smart** in the toolbar → **VizJS Render DOT**
+
+  #### 2. API
+
+  ```elixir
+  dot_string = "digraph G { A -> B }";
+  Kino.VizJS.render(dot_string);
+
+  # Custom engine and dimensions
+  Kino.VizJS.render(dot_string, engine: "dot", height: "500px", width: "100%");
+  ```
+
+  #### 3. Theme Integration
+
+  The component automatically uses `currentColor` for graph elements, so your
+  graphs will always match Livebook's theme:
+
+  - Background follows theme background
+  - Text follows theme text color
+  - Borders adapt to theme borders
+
+  Explicit colors in your DOT source are preserved.
+
+  #### 4. Controls
+
+  - **Layout Engine:** Switch between `dot`, `neato`, `fdp`, `circo`, `twopi`, `osage`
+  - **Height/Width:** Custom dimensions (supports pixels or percentages)
+  - **Download:** Export as DOT or SVG
+  - **Copy:** Copy DOT source to clipboard
+  """
 
   use Kino.JS
   use Kino.JS.Live
