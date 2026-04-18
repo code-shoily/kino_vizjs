@@ -16,7 +16,7 @@ Add `kino_vizjs` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:kino_vizjs, "~> 0.5"}
+    {:kino_vizjs, "~> 0.8"}
   ]
 end
 ```
@@ -25,7 +25,7 @@ Or in a Livebook setup cell:
 
 ```elixir
 Mix.install([
-  {:kino_vizjs, "~> 0.5"}
+  {:kino_vizjs, "~> 0.8"}
 ])
 ```
 
@@ -39,6 +39,7 @@ The Smart Cell provides:
 - A DOT editor with a dark theme.
 - A layout engine selector (`dot`, `circo`, `neato`, `fdp`, `twopi`, `osage`).
 - Configurable height and width that update the output reactively.
+- Pan & Zoom support for large graphs.
 
 ### `Kino.VizJS.render/2`
 

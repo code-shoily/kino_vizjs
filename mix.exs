@@ -1,7 +1,7 @@
 defmodule KinoVizjs.MixProject do
   use Mix.Project
 
-  @version "0.5.0"
+  @version "0.8.0"
   @source_url "https://github.com/code-shoily/kino_vizjs"
 
   def project do
