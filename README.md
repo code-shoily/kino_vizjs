@@ -5,9 +5,9 @@
 [![CI](https://github.com/code-shoily/kino_vizjs/actions/workflows/ci.yml/badge.svg)](https://github.com/code-shoily/kino_vizjs/actions/workflows/ci.yml)
 [![License](https://img.shields.io/hexpm/l/kino_vizjs.svg)](LICENSE)
 
-A [Livebook](https://livebook.dev) smart cell and component for rendering GraphViz (DOT) graphs in the browser using [Viz.js](https://github.com/mdaines/viz-js).
+A [Livebook](https://livebook.dev) smart cell and component for rendering Graphviz (DOT) graphs in the browser using [@hpcc-js/wasm](https://github.com/hpcc-js/hpcc-js).
 
-Viz.js compiles Graphviz to WebAssembly, so no local Graphviz installation is needed. Unlike [kino_yog](https://github.com/code-shoily/kino_yog), which is tied to [Yog](https://github.com/code-shoily/yog), this package works with any source that produces DOT strings.
+`@hpcc-js/wasm` compiles Graphviz to WebAssembly, so no local Graphviz installation is needed. Unlike [kino_yog](https://github.com/code-shoily/kino_yog), which is tied to [Yog](https://github.com/code-shoily/yog), this package works with any source that produces DOT strings.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Add `kino_vizjs` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:kino_vizjs, "~> 0.8"}
+    {:kino_vizjs, "~> 0.9"}
   ]
 end
 ```
@@ -25,7 +25,7 @@ Or in a Livebook setup cell:
 
 ```elixir
 Mix.install([
-  {:kino_vizjs, "~> 0.8"}
+  {:kino_vizjs, "~> 0.9"}
 ])
 ```
 

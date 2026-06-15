@@ -1,6 +1,6 @@
 defmodule Kino.VizJS.SmartCell do
   @moduledoc """
-  Renders GraphViz DOT strings using Viz.js (WebAssembly).
+  Renders Graphviz DOT strings using WebAssembly.
 
   ### Features
 

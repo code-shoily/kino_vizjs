@@ -1,6 +1,6 @@
 defmodule KinoVizjs do
   @moduledoc """
-  Kino integration for Viz.js.
+  Kino integration for Graphviz via WebAssembly.
   """
 
   use Application

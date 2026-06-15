@@ -1,6 +1,6 @@
 defmodule Kino.VizJS do
   @moduledoc """
-  A Kino component for rendering GraphViz variables (DOT strings) via Viz.js.
+  A Kino component for rendering Graphviz variables (DOT strings) via WebAssembly.
   """
 
   use Kino.JS
@@ -12,7 +12,7 @@ defmodule Kino.VizJS do
   @typep option :: {:engine, engine()} | {:height, dimension()} | {:width, dimension()}
 
   @doc """
-  Creates a new Kino component to render the given DOT string using Viz.js.
+  Creates a new Kino component to render the given DOT string using WebAssembly.
 
   ## Options
 
