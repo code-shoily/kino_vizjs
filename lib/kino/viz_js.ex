@@ -45,9 +45,9 @@ defmodule Kino.VizJS do
       ctx.importCSS("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css");
 
       const loadVizJS = async () => {
-        if (!window.Viz) {
-          await ctx.importJS("https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js");
-          await ctx.importJS("https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js");
+        if (!window["@hpcc-js/wasm/graphviz"]) {
+          window.__hpcc_wasmFolder = "https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/";
+          await ctx.importJS("https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/graphviz.umd.js");
         }
       };
 
@@ -160,15 +160,17 @@ defmodule Kino.VizJS do
         `;
 
         try {
-          const viz = new window.Viz();
+          const hpccGraphviz = window["@hpcc-js/wasm/graphviz"];
+          const graphviz = await hpccGraphviz.Graphviz.load();
           
-          // Ensure options contains the chosen engine
           const renderOptions = p.options || {};
-          if (p.engine) {
-            renderOptions.engine = p.engine;
-          }
+          const engine = p.engine || "dot";
 
-          const element = await viz.renderSVGElement(p.dot_string, renderOptions);
+          const svgString = graphviz.layout(p.dot_string, "svg", engine, renderOptions);
+          
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(svgString, "image/svg+xml");
+          const element = doc.documentElement;
           
           // Theme awareness
           element.querySelectorAll("[stroke='black'], [stroke='#000000']").forEach(node => node.setAttribute("stroke", "currentColor"));

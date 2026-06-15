@@ -1,7 +1,7 @@
 defmodule KinoVizjs.MixProject do
   use Mix.Project
 
-  @version "0.8.0"
+  @version "0.9.0"
   @source_url "https://github.com/code-shoily/kino_vizjs"
 
   def project do
@@ -31,7 +31,7 @@ defmodule KinoVizjs.MixProject do
   defp deps do
     [
       {:kino, "~> 0.14"},
-      {:ex_doc, "~> 0.34", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.35", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: :dev, runtime: false}
     ]

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.9.0] - 2026-06-15
+
+### Changed
+- Replaced the deprecated and unmaintained `Viz.js` library with the modern, actively maintained `@hpcc-js/wasm` (WebAssembly-based Graphviz engine) via CDN for faster, more compliant, and robust Graphviz layouts in browsers.
+- Updated `ex_doc` to `~> 0.35` in `mix.exs`.
+
 ## [0.8.0] - 2026-04-18
 
 ### Added

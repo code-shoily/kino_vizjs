@@ -186,7 +186,7 @@ defmodule Kino.VizJS.SmartCell do
           <textarea id="dot-textarea" spellcheck="false" class="block w-full min-h-[450px] p-8 text-[13px] font-mono focus:outline-none resize-y shadow-inner transition-colors duration-200 selection:bg-indigo-500/30" style="tab-size: 2; line-height: 1.6; background-color: #0b0e14; color: #e0e7ff; border: none;">${payload.dot_string}</textarea>
           
           <div class="absolute bottom-4 right-6 pointer-events-none opacity-20">
-             <div class="text-[40px] font-black text-indigo-500/20 tracking-tighter select-none">Viz.js</div>
+             <div class="text-[40px] font-black text-indigo-500/20 tracking-tighter select-none">Graphviz</div>
           </div>
         </div>
       `;
